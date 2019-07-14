@@ -104,20 +104,20 @@ func NewDesmosApp(logger log.Logger, db dbm.DB) *desmosApp {
 
 	// Here you initialize your application with the store keys it requires
 	var app = &desmosApp{
-		BaseApp:        bApp,
-		cdc:            cdc,
+		BaseApp: bApp,
+		cdc:     cdc,
 
-		keyMain:        sdk.NewKVStoreKey(bam.MainStoreKey),
-		keyAccount:     sdk.NewKVStoreKey(auth.StoreKey),
-		keySupply:      sdk.NewKVStoreKey(supply.StoreKey),
-		keyStaking:     sdk.NewKVStoreKey(staking.StoreKey),
-		tkeyStaking:    sdk.NewTransientStoreKey(staking.TStoreKey),
-		keyDistr:       sdk.NewKVStoreKey(distr.StoreKey),
-		tkeyDistr:      sdk.NewTransientStoreKey(distr.TStoreKey),
-		keyMagpie:      sdk.NewKVStoreKey(magpie.StoreKey),
-		keyParams:      sdk.NewKVStoreKey(params.StoreKey),
-		tkeyParams:     sdk.NewTransientStoreKey(params.TStoreKey),
-		keySlashing:    sdk.NewKVStoreKey(slashing.StoreKey),
+		keyMain:     sdk.NewKVStoreKey(bam.MainStoreKey),
+		keyAccount:  sdk.NewKVStoreKey(auth.StoreKey),
+		keySupply:   sdk.NewKVStoreKey(supply.StoreKey),
+		keyStaking:  sdk.NewKVStoreKey(staking.StoreKey),
+		tkeyStaking: sdk.NewTransientStoreKey(staking.TStoreKey),
+		keyDistr:    sdk.NewKVStoreKey(distr.StoreKey),
+		tkeyDistr:   sdk.NewTransientStoreKey(distr.TStoreKey),
+		keyMagpie:   sdk.NewKVStoreKey(magpie.StoreKey),
+		keyParams:   sdk.NewKVStoreKey(params.StoreKey),
+		tkeyParams:  sdk.NewTransientStoreKey(params.TStoreKey),
+		keySlashing: sdk.NewKVStoreKey(slashing.StoreKey),
 	}
 
 	// The ParamsKeeper handles parameter storage for the application
@@ -153,11 +153,11 @@ func NewDesmosApp(logger log.Logger, db dbm.DB) *desmosApp {
 	)
 
 	app.supplyKeeper = supply.NewKeeper(
-		app.cdc, 
-		app.keySupply, 
-		app.accountKeeper, 
-		app.bankKeeper, 
-		supply.DefaultCodespace, 
+		app.cdc,
+		app.keySupply,
+		app.accountKeeper,
+		app.bankKeeper,
+		supply.DefaultCodespace,
 		maccPerms,
 	)
 	// The FeeCollectionKeeper collects transaction fees and renders them to the fee distribution module
