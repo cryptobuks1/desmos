@@ -15,6 +15,7 @@ const (
 	AttributeKeyPostID        = "post_id"
 	AttributeKeyLikeID        = "like_id"
 	AttributeKeySessionID     = "session_id"
+	AttributeKeySessionExpiry = "expiry"
 	AttributeKeyNamespace     = "namespace"
 	AttributeKeyExternalOwner = "external_owner"
 
