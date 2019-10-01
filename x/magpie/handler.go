@@ -181,16 +181,6 @@ func handleMsgCreateSession(ctx sdk.Context, keeper Keeper, msg MsgCreateSession
 	// check if the signature is signed by the external address
 	// addr, err := utils.GetAccAddressFromExternal(msg.ExternalOwner, msg.Namespace)
 
-	// if err != nil {
-	// 	return err.Result()
-	// }
-
-	// acc := auth.NewBaseAccountWithAddress(addr)
-
-	// pubkey := acc.GetPubKey()
-
-	// pubkey := sdk.MustGetAccPubKeyBech32(msg.Pubkey)
-
 	pkBytes, _ := base64.StdEncoding.DecodeString(msg.Pubkey)
 
 	var pkBytes33 = [33]byte{}
@@ -210,10 +200,12 @@ func handleMsgCreateSession(ctx sdk.Context, keeper Keeper, msg MsgCreateSession
 		// panic("The session signature is not correct.")
 	}
 
+	var expiry = msg.Created.Add(time.Hour * 24 * 30)
+
 	session := Session{
 		ID:            xid.New().String(),
 		Created:       msg.Created,
-		Expiry:        msg.Created.Add(time.Hour * 24),
+		Expiry:        expiry,
 		Owner:         msg.Owner,
 		Namespace:     msg.Namespace,
 		ExternalOwner: msg.ExternalOwner,
@@ -234,7 +226,7 @@ func handleMsgCreateSession(ctx sdk.Context, keeper Keeper, msg MsgCreateSession
 				sdk.NewAttribute(types.AttributeKeySessionID, session.ID),
 				sdk.NewAttribute(types.AttributeKeyNamespace, msg.Namespace),
 				sdk.NewAttribute(types.AttributeKeyExternalOwner, msg.ExternalOwner),
-				sdk.NewAttribute(types.AttributeKeySessionExpiry, msg.Created.Add(time.Hour*24).String()),
+				sdk.NewAttribute(types.AttributeKeySessionExpiry, expiry.String()),
 			),
 		)
 	}
