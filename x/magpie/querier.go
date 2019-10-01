@@ -1,6 +1,8 @@
 package magpie
 
 import (
+	"fmt"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -9,8 +11,9 @@ import (
 
 // query endpoints supported by the magpie Querier
 const (
-	QueryPost = "post"
-	QueryLike = "like"
+	QueryPost    = "post"
+	QueryLike    = "like"
+	QuerySession = "session"
 )
 
 // Params for queries:
@@ -25,8 +28,10 @@ func NewQuerier(keeper Keeper) sdk.Querier {
 			return queryPost(ctx, path[1:], req, keeper)
 		case QueryLike:
 			return queryLike(ctx, path[1:], req, keeper)
+		case QuerySession:
+			return querySession(ctx, path[1:], req, keeper)
 		default:
-			return nil, sdk.ErrUnknownRequest("unknown magpie query endpoint")
+			return nil, sdk.ErrUnknownRequest(fmt.Sprintf("unknown magpie query endpoint: %v", path))
 		}
 	}
 }
